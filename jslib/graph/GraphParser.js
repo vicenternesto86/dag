@@ -355,11 +355,13 @@ var GraphParser = {
 	parseGuess : function( adjacencyListOrMatrix, vertexLabelsAndWeights ){
 		"use strict"
 		var first_blank, firstarg = adjacencyListOrMatrix.trim()
-		if( !vertexLabelsAndWeights ){
-			first_blank = adjacencyListOrMatrix.search( /\r?\n[ \t]*\r?\n/ )
-			vertexLabelsAndWeights = adjacencyListOrMatrix.substr( 0, first_blank ).trim()
-			adjacencyListOrMatrix = adjacencyListOrMatrix.substr( first_blank ).trim()
-		}
+                if( !vertexLabelsAndWeights ){
+                        first_blank = adjacencyListOrMatrix.search( /\r?\n[ \t]*\r?\n/ )
+                        if( first_blank >= 0 ){
+                                vertexLabelsAndWeights = adjacencyListOrMatrix.substr( 0, first_blank ).trim()
+                                adjacencyListOrMatrix = adjacencyListOrMatrix.substr( first_blank ).trim()
+                        }
+                }
 		if( adjacencyListOrMatrix.match( /^[\s01]+$/ ) !== null ){
 			return this.parseAdjacencyMatrix( adjacencyListOrMatrix, vertexLabelsAndWeights )
 		} else {
